@@ -1,0 +1,495 @@
+@use './mixins' as *;
+@use './colors' as *;
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    background: url(../img/background1920_1078.png);
+    background-size: cover;
+    // font-family: 'Sedgwick Ave', cursive;
+    font-family: 'Walter Turncoat', cursive;
+}
+
+.app-area {
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    margin: 0 auto;
+    // border: 1px solid black;
+    text-align: center;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    display: none;
+}
+
+.menu {
+    position: relative;
+    box-sizing: border-box;
+    height: calc(100vh - 1rem);
+    width: 80vh;
+    transform: translateY(0.5rem);
+    margin: 0 auto;
+    @include borderAndBgc;
+    overflow: hidden;
+    transition: .3s;
+    // display: none;
+    
+    &__img {
+        position: absolute;
+        top: 0;
+        left: 3%;
+        transition: transform .3s;
+        z-index: -1;
+
+        &-spider {
+            width: 27%;
+            height: 27%;
+            transform: translateY(0%);
+            animation: spiderMenu 1.5s infinite linear;
+            animation-direction: alternate;
+        }
+    }
+
+    &__img2 {
+        position: absolute;
+        bottom: 0;
+        transform: translate(50%, 50%);
+        right: 0%;
+        width: 90%;
+        height: 80%;
+        opacity: 0.8;
+        z-index: -1
+    }
+
+    h1 {
+        color: $borderBox-shadow-title-color;
+        letter-spacing: 0.25rem;
+        text-shadow: 1px 1px 2px black;
+        font-size: 4rem;
+        text-align: center;
+        z-index: 1;
+        margin: 6rem 0;
+
+        span:nth-child(odd) {
+            display: inline-block;
+            animation: lettersH1 2s infinite linear;
+        }
+
+        span:nth-child(even) {
+            display: inline-block;
+            animation: lettersH1 2s infinite linear;
+            animation-direction: reverse;
+        }
+    }
+
+
+    &__btn {
+        text-align: center;
+        display: block;
+        margin: 0 auto 4rem auto;
+        z-index: 1;
+        padding: 1rem 2rem;
+        font-family: 'Walter Turncoat', cursive;
+        font-size: 2rem;
+        font-weight: bold;
+        @include btns;
+        background-color: rgba(255,255,255,0.8);
+
+        &:hover {
+            box-shadow: 0 0 15px $borderBox-shadow-title-color;
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+    }
+
+
+    &__highscores {
+        width: 70%;
+        text-align: center;
+
+        table {
+            width: 100%;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+
+            td, th {
+                padding: 0.75rem 0;
+            }
+
+            th {
+                font-weight: bold;
+            }
+
+            tr:nth-child(even) {
+                background-color: rgba(235,235,35,0.2);
+            }
+
+        }
+    }
+
+
+    &__instruction {
+        width: 70%;
+        text-align: left !important;
+        font-size: 1.5rem;
+
+        &-controls {
+            border-bottom: 1px solid black;
+            padding-bottom: 1rem;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+
+            .keys {
+                width: 40%;
+
+                p {
+                    display: inline-block;
+                    border: 1px solid rgb(0,0,0);
+                    width: 18%;
+                    height: 25%;
+                    text-align: center;
+                    margin: 0.5rem 0;
+                    box-shadow: 1px 1px 0px rgb(0,0,0);
+                    border-radius: 3px;
+                    background-color: rgba(255,255,255,0.8);
+                }
+            }
+        }
+
+        &-targets {
+            border-bottom: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding-bottom: 1.5rem;
+
+            .target {
+                display: flex;
+                margin-top: 1.5rem;
+
+                img {
+                    width: 3rem;
+                    height: 3rem;
+                    margin-right: 2rem;
+                }
+            }
+        }
+
+
+        &-rules {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+
+            .rules-img {
+                font-weight: bold;
+                color: rgb(255,255,255);
+                letter-spacing: 0.5rem;
+                text-shadow: 1px 1px 2px black;
+                text-align: center;
+                margin-right: 2rem;
+                font-size: 1.75rem;
+            } 
+        }
+  
+    }
+
+    .second {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        display: none;
+
+        h1 {
+            font-size: 3rem;
+            margin: 3rem 0
+        }
+
+        input {
+            width: 90%;
+            height: 2rem;
+            font-family: 'Walter Turncoat', cursive;
+            text-align: center;
+            font-size: 1.25rem;
+            box-shadow: 0 0 5px $borderBox-shadow-title-color;
+            border: none;
+            outline-color: $borderBox-shadow-title-color;
+            background-color: rgba(255,255,255,0.8);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+    }
+}
+
+
+.game {
+    box-sizing: content-box;
+    position: relative;
+    height: 80%;
+    width: 80%;
+    @include borderAndBgc;
+    transition: transform .3s;
+    overflow: hidden;
+    
+
+    &__player {
+        position: absolute;
+        width: 10%;
+        height: 10%;
+        background: url(../img/spider-solid.png);
+        background-size: cover;
+        background-position: center;
+        top: 50%;
+        left: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+    }
+
+    &__target {  
+        background: url(../img/mosquito-solid.png);
+        @include targets;
+
+        &-bonus {
+            background: url(../img/bug-solid.png);
+            @include targets;
+            opacity: 1;
+            animation: bonusBlink .5s infinite alternate;
+        }
+    }
+
+    &__spiderweb {
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        transform: translate(-50%, -15%);
+        opacity: 0.2;
+        
+    }
+
+    &__gameover {
+        position: absolute;
+        top: 48%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        width: 80%;
+        z-index: 2;
+
+        &-highscore {
+            font-weight: bold;
+            color: rgb(255,255,255);
+            letter-spacing: 0.5rem;
+            text-shadow: 1px 1px 2px black;
+            font-size: 3.25rem;
+            margin: 0;
+            animation: newHighscore .4s infinite alternate;
+            opacity: 0;
+        }
+        
+        &-title {
+            font-weight: bold;
+            color: rgb(255,255,255);
+            letter-spacing: 0.5rem;
+            text-shadow: 1px 1px 2px black;
+            font-size: 6rem;
+            margin: 4rem 0;
+        }
+
+        &-btn {
+            @include btns;
+            padding: 1rem 1.5rem;
+            font-family: 'Walter Turncoat', cursive;
+            font-size: 2.5rem;
+            font-weight: bold;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.9);
+
+            &:hover {
+                box-shadow: 0 0 15px $borderBox-shadow-title-color;
+            }
+    
+            &:active {
+                transform: scale(0.9);
+            }
+        }
+    }
+
+}
+
+.inventory {
+    width: 80%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    @include borderAndBgc;
+
+    &__time {
+        width: 12rem;
+    }
+
+    &__score {
+        width: 12rem;
+
+        &-points {
+            position: relative;
+            
+            .added-points {
+                position: absolute;
+                right: 0.5rem;
+                color: red;
+                opacity: 0;
+            }     
+        }
+    }
+
+    &__menu {
+        width: 12rem;
+
+        &-return {
+            width: 50%;
+            margin: 0 auto 1rem auto !important; 
+            background: none;
+            @include btns;
+
+            &:hover {
+                box-shadow: 0 0 8px $borderBox-shadow-title-color;
+            }
+
+            &:active {
+                transform: scale(0.9);
+            }
+        }
+    }
+
+    .title {
+        color: $borderBox-shadow-title-color;
+        margin: 1rem 0;
+        letter-spacing: 0.25rem;
+        text-shadow: 1px 1px 2px black;
+        font-size: 1.75rem;
+    }
+
+    .value {
+        margin: 1rem 0;
+        font-size: 1.75rem;
+        font-weight: bold;
+    }
+}
+
+
+.active {
+    animation: addedPoints .5s;
+}
+
+.game-over {
+    animation: gameOver .2s linear;
+}
+
+.game-over2 {
+    animation: gameOver2 .2s linear forwards;
+}
+
+@keyframes bonusBlink {
+    from {
+        opacity: 0.25;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes addedPoints {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes gameOver {
+    0% {
+        transform: translateX(0);
+        box-shadow: 0 0 10px red;
+    }
+    25% {
+        transform: translateX(-1%);
+        box-shadow: 0 0 5px $borderBox-shadow-title-color;
+    }
+    50% {
+        transform: translateX(0);
+        box-shadow: 0 0 10px red;
+    }
+    75% {
+        transform: translateX(1%);
+        box-shadow: 0 0 5px $borderBox-shadow-title-color;
+    }
+    100% {
+        transform: translateX(0);
+        box-shadow: 0 0 10px red;
+    }
+}
+
+@keyframes gameOver2 {
+    from {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+
+    }
+}
+
+@keyframes newHighscore {
+    from {
+        color: rgb(235, 235, 35);
+        transform: scale(1);
+    }
+    to {
+        color: rgb(255,255,255);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes spiderMenu {
+    from {
+        transform: translateY(-40%)
+    }
+    to {
+        transform: translateY(0)
+    }
+}
+
+@keyframes lettersH1 {
+    0% {
+        transform: translateY(0%);
+    }
+    25% {
+        transform: translateY(2%);
+    }
+    50% {
+        transform: translateY(0%);
+    }
+    75% {
+        transform: translateY(-2%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}

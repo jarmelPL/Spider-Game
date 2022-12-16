@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Spider Game</title>
+   <script src="https://kit.fontawesome.com/96c6742b67.js" crossorigin="anonymous"></script>
+   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Walter+Turncoat&family=Sedgwick+Ave&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="css/style.css">
+   <!--Music: https://www.chosic.com/free-music/all/-->
+   
+</head>
+<body>
+   <audio autoplay loop src="music.mp3"></audio>
+
+   <div class="menu">
+      <h1><span>s</span><span>p</span><span>i</span><span>d</span><span>e</span><span>r</span> <span>g</span><span>a</span><span>m</span><span>e</span></h1>
+      <div class="menu__btns">
+         <button class="menu__btn start">Start</button>
+         <button class="menu__btn highscore">Highscore</button>
+         <button class="menu__btn instruction">Instruction</button>
+      </div>
+      <div class="menu__img spider-img">
+            <img src="img/spider-menu.png" alt="spider" class="menu__img-spider">
+      </div>
+      <img src="img/spiderweb.png" alt="spider" class="menu__img2 spider-img">
+
+      <div class="menu__difficulty second">
+         <h1>difficulty</h1>
+         <button class="menu__btn easy">Easy</button>
+         <button class="menu__btn hard">Hard</button>
+         <button class="menu__btn back1"><i class="fa-solid fa-arrow-left"></i></button>
+      </div>
+
+      <div class="menu__name second">
+         <h1>your name</h1>
+         <input type="text" class="menu__name-input" maxlength="10" placeholder="type here">
+         <button class="menu__btn play">play</button>
+         <button class="menu__btn back2"><i class="fa-solid fa-arrow-left"></i></button>
+      </div>
+
+      <div class="menu__highscores second">
+         <h1>high scores</h1>
+         <table class="table">
+            <tr>
+               <th></th>
+               <th>Name</th>
+               <th>Score</th>
+            </tr>
+            <tr>
+               <td>1</td>
+               <td id="name_1">.....</td>
+               <td id="score_1">.....</td>
+            </tr>
+            <tr>
+               <td>2</td>
+               <td id="name_2">.....</td>
+               <td id="score_2">.....</td>
+            </tr>
+            <tr>
+               <td>3</td>
+               <td id="name_3">.....</td>
+               <td id="score_3">.....</td>
+            </tr>
+            <tr>
+               <td>4</td>
+               <td id="name_4">.....</td>
+               <td id="score_4">.....</td>
+            </tr>
+            <tr>
+               <td>5</td>
+               <td id="name_5">.....</td>
+               <td id="score_5">.....</td>
+            </tr>
+         </table>
+
+         <button class="menu__btn back1"><i class="fa-solid fa-arrow-left"></i></button>
+      </div>
+
+      <div class="menu__instruction second">
+         <h1>Instruction</h1>
+         <div class="menu__instruction-controls">
+
+            <div class="keys">
+               <div class="keys-wasd">
+                  <p><i class="fa-solid fa-w"></i></p>
+                  <p><i class="fa-solid fa-a"></i></p>
+                  <p><i class="fa-solid fa-s"></i></p>
+                  <p><i class="fa-solid fa-d"></i></p>
+               </div>
+               <div class="keys-arrows">
+                  <p><i class="fa-solid fa-arrow-up-long"></i></p>
+                  <p><i class="fa-solid fa-arrow-left-long"></i></p>
+                  <p><i class="fa-solid fa-arrow-down-long"></i></p>
+                  <p><i class="fa-solid fa-arrow-right-long"></i></p>
+               </div> 
+            </div>
+
+            <div class="keys_description">use these buttons to move</div>
+
+         </div>
+         <div class="menu__instruction-targets">
+            <div class="target">
+               <img class="target-img" src="img/mosquito-solid.png" alt="target"></img><div class="target-description">catch the mosquito to gain <strong>5</strong> pts</div>
+            </div>
+            <div class="target">
+               <img class="bonusTarget-img" src="img/bug-solid.png" alt="bonus-target"></img><div class="bonusTarget-description">catch the bug to gain <strong>25</strong> pts</div>
+            </div>
+         </div>
+         <div class="menu__instruction-rules">
+            <div class="rules-img">game over</div><div class="rules-description">Watch out for the edges of the board and the time - it's limited!</div>
+         </div>
+         <button class="menu__btn back1"><i class="fa-solid fa-arrow-left"></i></button>
+      </div>
+
+
+   </div>
+
+   <div class="app-area">
+      <div class="inventory">
+         <div class="inventory__time">
+            <h2 class="inventory__time-title title">Time</h2>
+            <p class="inventory__time-seconds value">30</p>
+         </div>
+         <div class="inventory__score">
+            <h2 class="inventory__score-title title">Score</h2>
+            <p class="inventory__score-points value"><span class="current-points">0</span><span class="added-points">+10 !</span></p>
+         </div>
+         <div class="inventory__menu">
+            <h2 class="inventory__menu-title title">Menu</h2>
+            <p class="inventory__menu-return value"><i class="fa-solid fa-arrow-right-from-bracket"></i></p>
+         </div>
+      </div>
+
+      <div class="game">
+         <div class="game__player"></div>
+         <!-- <div class="game__target"></div> -->
+         <!-- <div class="game__target-bonus"></div> -->
+         <img src="img/spiderweb.png" alt="spiderweb" class="game__spiderweb">
+         <div class="game__gameover">
+            <p class="game__gameover-highscore">new highscore!</p>
+            <p class="game__gameover-title">game over</p>
+            <button class="game__gameover-btn"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+         </div>
+      </div>
+   </div>
+
+   <script src="script.js"></script>
+   
+</body>
+</html>
