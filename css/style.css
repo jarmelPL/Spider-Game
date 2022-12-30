@@ -177,6 +177,14 @@ body {
   margin-right: 2rem;
   font-size: 1.75rem;
 }
+.menu__signature {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  text-transform: lowercase;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
 .menu .second {
   position: absolute;
   top: 20%;

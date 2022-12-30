@@ -203,6 +203,16 @@ body {
                 font-size: 1.75rem;
             } 
         }
+        
+    }
+
+    &__signature {
+        position: absolute;
+        left: 5px;
+        bottom: 5px;
+        text-transform: lowercase;
+        font-size: 0.75rem;
+        opacity: .75;
   
     }
 
