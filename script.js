@@ -18,6 +18,7 @@ const appArea = document.querySelector('.app-area')
 const gameOverMenu = document.querySelector('.game__gameover')
 const restartBtn = document.querySelector('.game__gameover-btn')
 const gameOverNewHighscore = document.querySelector('.game__gameover-highscore')
+const gameOverNewHighscoreName = document.querySelector('.game__gameover-highscore-name')
 
 const player = document.querySelector('.game__player')
 const game = document.querySelector('.game')
@@ -25,6 +26,9 @@ const time = document.querySelector('.inventory__time-seconds')
 const score = document.querySelector('.current-points')
 const returnToMenu = document.querySelector('.inventory__menu-return')
 const addedPoints = document.querySelector('.added-points')
+
+const names = document.querySelectorAll('.name')
+const scores = document.querySelectorAll('.score')
 
 let position = {
     x: 50,
@@ -60,6 +64,7 @@ let flags = {
     start: false,
     gameOver: false,
 }
+
 
 const clearAll = () => {
     clearMoveIntervals()
@@ -108,8 +113,10 @@ const resetGame = () => {
     const target = document.querySelector('.game__target')
     game.removeChild(target)
     createTarget()
+
     const bonusTarget = document.querySelector('.game__target-bonus')
-    game.removeChild(bonusTarget)
+    if (bonusTarget) {
+        game.removeChild(bonusTarget) }
 }
 
 // MENU
@@ -400,6 +407,18 @@ const gameOver = () => {
         clearAll()
     }
 
+
+// HIGHSCORES
+
+const highscoresLoops = () => {
+    for(let n=0; n<highscoreTable.length && n<5; n++) {
+        names[n].textContent=highscoreTable[n].player
+    }
+    for(let s=0; s<highscoreTable.length && s<5; s++) {
+        scores[s].textContent=highscoreTable[s].score
+    }
+}
+
 const toHighscoreTable = () => {
     finalScore=currentScore;
 
@@ -410,74 +429,23 @@ const toHighscoreTable = () => {
     highscoreTable.push(gameResult)
     highscoreTable.sort(function(a,b) {return (b.score - a.score)})
 
-    if (finalScore>0) {
-        if (highscoreTable.length==1 || finalScore>highscoreTable[1].score) { // samo 'finalScore>highscoreTable[1].score' stworzy przy pierwszej próbie od razu tablicę z dwoma elementami ( [0] i [1] z warunku)
-            gameOverNewHighscore.style.opacity=1;
-        } else {
-            gameOverNewHighscore.style.opacity=0;
-        }
+    gameOverNewHighscore.style.opacity=0;
+    if (finalScore>0 && (highscoreTable.length==1 || finalScore>highscoreTable[1].score)) { // samo 'finalScore>highscoreTable[1].score' stworzy przy pierwszej próbie od razu tablicę z dwoma elementami ( [0] i [1] z warunku)
+        gameOverNewHighscoreName.innerText=nameInput.value
+        gameOverNewHighscore.style.opacity=1;
     }
 
-    const name_1 = document.querySelector('#name_1')
-    const score_1 = document.querySelector('#score_1')
-    const name_2 = document.querySelector('#name_2')
-    const score_2 = document.querySelector('#score_2')
-    const name_3 = document.querySelector('#name_3')
-    const score_3 = document.querySelector('#score_3')
-    const name_4 = document.querySelector('#name_4')
-    const score_4 = document.querySelector('#score_4')
-    const name_5 = document.querySelector('#name_5')
-    const score_5 = document.querySelector('#score_5')
+    highscoresLoops()
 
-
-    switch (highscoreTable.length) {
-        case 1:
-            name_1.textContent=highscoreTable[0].player
-            score_1.textContent=highscoreTable[0].score
-        break;
-        case 2:
-            name_1.textContent=highscoreTable[0].player
-            score_1.textContent=highscoreTable[0].score
-            name_2.textContent=highscoreTable[1].player
-            score_2.textContent=highscoreTable[1].score
-        break;
-        case 3:
-            name_1.textContent=highscoreTable[0].player
-            score_1.textContent=highscoreTable[0].score
-            name_2.textContent=highscoreTable[1].player
-            score_2.textContent=highscoreTable[1].score
-            name_3.textContent=highscoreTable[2].player
-            score_3.textContent=highscoreTable[2].score
-        break;
-        case 4:
-            name_1.textContent=highscoreTable[0].player
-            score_1.textContent=highscoreTable[0].score;
-            name_2.textContent=highscoreTable[1].player
-            score_2.textContent=highscoreTable[1].score
-            name_3.textContent=highscoreTable[2].player
-            score_3.textContent=highscoreTable[2].score
-            name_4.textContent=highscoreTable[3].player
-            score_4.textContent=highscoreTable[3].score
-        break;
-        default:
-            name_1.textContent=highscoreTable[0].player
-            score_1.textContent=highscoreTable[0].score;
-            name_2.textContent=highscoreTable[1].player
-            score_2.textContent=highscoreTable[1].score
-            name_3.textContent=highscoreTable[2].player
-            score_3.textContent=highscoreTable[2].score
-            name_4.textContent=highscoreTable[3].player
-            score_4.textContent=highscoreTable[3].score
-            name_5.textContent=highscoreTable[4].player
-            score_5.textContent=highscoreTable[4].score;
-    }
-    
-    // for (let i=1;i<highscoreTable.length; i++) {
-    //     name_[i].textContent=highscoreTable[i-1].player;
-    //     score_i.textContent=highscoreTable[i-1].score;
-    //     }
+    localStorage.setItem('local_highscores', JSON.stringify(highscoreTable))
 }
 
+
+if (localStorage.getItem('local_highscores')) {
+    highscoreTable=JSON.parse(localStorage.getItem('local_highscores'));
+
+    highscoresLoops()
+}
 
 // COUNTDOWN
 
@@ -524,3 +492,9 @@ window.addEventListener('load', createTarget)
 window.addEventListener('keydown',move)
 window.addEventListener('keydown',startGame)
 restartBtn.addEventListener('click',restartGame)
+
+
+// dodane localstorage
+// zoptymalizowany kod dodawania do highscore
+// poprawiony błąd przy resecie gry, znaim pojawił się bonus
+// poprawiony błąd z napisem new highscore, ktory wyswietlal sie po zdobyciu 0pktow od razu po najlepszym wyniku
